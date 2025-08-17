@@ -4,38 +4,27 @@ public:
         if (!head || left == right) return head; // No need to reverse
 
         ListNode* dummy = new ListNode(0, head);
-        ListNode* prev = dummy;
+        ListNode* leftpre = dummy;
+        ListNode*curNode=head;
+        for(int i=0;i<left-1;i++){
+            leftpre=leftpre->next;
+            curNode=curNode->next;
+        }
+        ListNode*preNode=nullptr;
+        ListNode*sub=curNode;
+        for(int i=0;i<(right -left+1);i++){
+            ListNode*nextNode=curNode->next;
+            curNode->next=preNode;
+            preNode=curNode;
+            
+            curNode=nextNode;
+
+        }
+        leftpre->next=preNode;
+        sub->next=curNode;
+
         
-        // Step 1: Move `prev` to the node before `left`
-        for (int i = 1; i < left; i++) {
-            prev = prev->next;
-        }
-
-        // Step 2: Reverse the sublist
-        ListNode* curr = prev->next; // First node in the sublist
-        ListNode* nextNode = nullptr;
-        ListNode* leftNode = curr; // Store left node to reconnect later
-
-        for (int i = 0; i < (right - left + 1); i++) {
-            nextNode = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = nextNode;
-        }
-
-        // Step 3: Reconnect the reversed part
-        leftNode->next = curr;
-        if (left > 1) {
-            ListNode* beforeLeft = dummy;
-            for (int i = 1; i < left; i++) {
-                beforeLeft = beforeLeft->next;
-            }
-            beforeLeft->next = prev;
-        } else {
-            head = prev; // If left == 1, update head
-        }
-
-        return head;
+       return dummy->next;
     }
 };
 
