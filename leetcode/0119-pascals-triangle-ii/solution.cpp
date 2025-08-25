@@ -1,16 +1,15 @@
 class Solution {
 public:
     vector<int> getRow(int rowIndex) {
-        vector<int>row;
-        long long prev=1;
-        row.push_back(prev);
-        for(int k=1;k<=rowIndex;k++){
-            long long curr=prev*(rowIndex-k+1)/k;
-            row.push_back(curr);
-            prev=curr;
-        }
+      vector<int>ansRow;
+      long long ans=1;
+      ansRow.push_back(1);
+      for(int col=1;col<=rowIndex;col++){
+        ans=ans*(rowIndex-col+1);
+        ans=ans/col;
+        ansRow.push_back(ans);
 
-
-        return row;
+      }
+      return ansRow;
     }
 };
