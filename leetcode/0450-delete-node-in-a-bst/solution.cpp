@@ -9,21 +9,39 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution{
+class Solution {
 public:
-    TreeNode* deleteNode(TreeNode* r,int k){
-        if(!r)return nullptr;
-        if(k<r->val)r->left=deleteNode(r->left,k);
-        else if(k>r->val)r->right=deleteNode(r->right,k);
-        else{
-            if(!r->left)return r->right;
-            if(!r->right)return r->left;
-            TreeNode* t=r->right;
-            while(t->left)t=t->left;
-            r->val=t->val;
-            r->right=deleteNode(r->right,t->val);
+    TreeNode* findMin(TreeNode* node) {
+        while (node && node->left) node = node->left;
+        return node;
+    }
+
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        if (!root) return nullptr;
+
+        if (key < root->val) {
+            root->left = deleteNode(root->left, key);
+        } else if (key > root->val) {
+            root->right = deleteNode(root->right, key);
+        } else {
+            if (!root->left && !root->right) {
+                delete root;
+                return nullptr;
+            } else if (!root->left) {
+                TreeNode* r = root->right;
+                delete root;
+                return r;
+            } else if (!root->right) {
+                TreeNode* l = root->left;
+                delete root;
+                return l;
+            } else {
+                TreeNode* succ = findMin(root->right);
+                root->val = succ->val;
+                root->right = deleteNode(root->right, succ->val);
+            }
         }
-        return r;
+        return root;
     }
 };
 
