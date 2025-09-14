@@ -1,22 +1,22 @@
-
 class Solution {
 public:
-    bool isValid(std::string s) {
-        std::stack<char> myStack;
-        for (int i = 0; i < s.length(); i++) {
-            if (s[i] == '(' || s[i] == '{' || s[i] == '[') {
-                myStack.push(s[i]);
-            } else if (!myStack.empty() &&
-                       ((s[i] == ')' && myStack.top() == '(') ||
-                        (s[i] == '}' && myStack.top() == '{') ||
-                        (s[i] == ']' && myStack.top() == '['))) {
-                myStack.pop();
+    bool isValid(string s) {
+        stack<char> st;
+        for (char c : s) {
+            if (c == '(' || c == '[' || c == '{') {
+                st.push(c);
             } else {
-                return false;
+                if (st.empty()) return false; 
+                char top = st.top();
+                st.pop();
+                if ((c == ')' && top != '(') ||
+                    (c == ']' && top != '[') ||
+                    (c == '}' && top != '{')) {
+                    return false;
+                }
             }
         }
-
-        return myStack.empty();
+        return st.empty();
     }
 };
 
