@@ -1,42 +1,38 @@
 class Solution {
 public:
     vector<int> spiralOrder(vector<vector<int>>& matrix) {
-        int n = matrix.size();
-        int m = matrix[0].size();
-        int left = 0, right = m - 1;
-        int top = 0, bottom = n - 1;
-        vector<int> ans;
-
-        while (left <= right && top <= bottom) {
-            // to righ
-            for (int i = left; i <= right; i++) {
-                ans.push_back(matrix[top][i]);
+        int m=matrix.size();
+        int n=matrix[0].size();
+        int top=0; int left=0;
+        int buttom=m-1; int right=n-1;
+        vector<int>result;
+        while(left<=right && top <= buttom){
+            //to rifht
+            for(int i=left;i<=right;i++){
+                result.push_back(matrix[top][i]);
             }
             top++;
-
-            // Tto buttom
-            for (int i = top; i <= bottom; i++) {
-                ans.push_back(matrix[i][right]);
+            //to buttom
+            for(int i=top;i<=buttom;i++){
+                result.push_back(matrix[i][right]);
             }
             right--;
-
             // to left
-            if (top <= bottom) {
-                for (int i = right; i >= left; i--) {
-                    ans.push_back(matrix[bottom][i]);
-                }
-                bottom--;
+            if(top<=buttom){
+            for(int i=right;i>=left;i--){
+                result.push_back(matrix[buttom][i]);
             }
-
-            // to top
-            if (left <= right) {
-                for (int i = bottom; i >= top; i--) {
-                    ans.push_back(matrix[i][left]);
-                }
-                left++;
+            buttom--;
             }
+            //to top
+            if(left<=right){
+            for(int i=buttom;i>=top;i--){
+                result.push_back(matrix[i][left]);
+            }
+            left++;}
         }
-        return ans;
+            return result;
+
     }
 };
 
